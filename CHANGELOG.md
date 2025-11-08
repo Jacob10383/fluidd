@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.35.1-k2](https://github.com/fluidd-core/fluidd/compare/v1.35.1...v1.35.1-k2) (2025-11-08)
+
+
+### Features
+
+* Add K2 webrtc handling
+
 ## [1.35.1](https://github.com/fluidd-core/fluidd/compare/v1.35.0...v1.35.1) (2025-11-27)
 
 

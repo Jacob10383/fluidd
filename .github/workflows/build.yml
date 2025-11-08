@@ -3,14 +3,12 @@ name: BUILD
 on:
   push:
     branches:
-      - develop
-      - master
+      - k2
     tags:
       - 'v*'
   pull_request:
     branches:
-      - develop
-      - master
+      - k2
 
 jobs:
   build:
