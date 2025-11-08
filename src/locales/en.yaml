@@ -664,6 +664,7 @@ app:
       uv4l_mjpeg_stream: UV4L-MJPEG Stream
       webrtc_go2rtc: WebRTC (go2rtc)
       webrtc_mediamtx: WebRTC (MediaMTX)
+      webrtc_crealityk2: WebRTC (Creality K2 Plus)
     camera_rotate_options:
       '90': 90°
       '180': 180°
