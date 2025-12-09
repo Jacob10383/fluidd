@@ -1088,6 +1088,13 @@ app:
       warn_on_filament_type_mismatch: >-
         Show a warning when the spool's filament type and the one selected in the slicer don't match
       remaining_filament_unit: Show remaining filament as
+  filament_box:
+    title:
+      filament_box: Filament Box
+      select_spool_for_slot: 'Select Spool for Slot {slot}'
+    label:
+      slot: Slot
+      empty: Empty
   mmu:
     btn:
       check_all_gates: Check All Gates

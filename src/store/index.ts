@@ -32,6 +32,7 @@ import { sensors } from './sensors'
 import { database } from './database'
 import { analysis } from './analysis'
 import { afc } from './afc'
+import { filamentBox } from './filamentBox'
 
 Vue.use(Vuex)
 
@@ -64,7 +65,8 @@ export const storeOptions = {
     sensors,
     database,
     analysis,
-    afc
+    afc,
+    filamentBox
   } satisfies RootModules,
   mutations: {},
   actions: {

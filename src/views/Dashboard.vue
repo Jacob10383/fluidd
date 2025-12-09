@@ -58,6 +58,7 @@ import SensorsCard from '@/components/widgets/sensors/SensorsCard.vue'
 import RunoutSensorsCard from '@/components/widgets/runout-sensors/RunoutSensorsCard.vue'
 import BeaconCard from '@/components/widgets/beacon/BeaconCard.vue'
 import AfcCard from '@/components/widgets/afc/AfcCard.vue'
+import FilamentBoxCard from '@/components/widgets/filament-box/FilamentBoxCard.vue'
 import type { KlipperPrinterSettings } from '@/store/printer/types'
 
 @Component({
@@ -80,7 +81,8 @@ import type { KlipperPrinterSettings } from '@/store/printer/types'
     SensorsCard,
     RunoutSensorsCard,
     BeaconCard,
-    AfcCard
+    AfcCard,
+    FilamentBoxCard
   }
 })
 export default class Dashboard extends Mixins(StateMixin) {
@@ -155,6 +157,10 @@ export default class Dashboard extends Mixins(StateMixin) {
 
   get supportsAfc (): boolean {
     return this.$typedGetters['printer/getSupportsAfc']
+  }
+
+  get supportsFilamentBox (): boolean {
+    return this.$typedGetters['server/componentSupport']('spoolman')
   }
 
   get hasMacros (): boolean {
@@ -233,6 +239,7 @@ export default class Dashboard extends Mixins(StateMixin) {
     if (item.id === 'sensors-card' && !this.hasSensors) return true
     if (item.id === 'temperature-card' && !this.hasHeatersOrTemperatureSensors) return true
     if (item.id === 'afc-card' && !this.supportsAfc) return true
+    if (item.id === 'filament-box-card' && !this.supportsFilamentBox) return true
 
     // Otherwise return the opposite of whatever the enabled state is.
     return !item.enabled
