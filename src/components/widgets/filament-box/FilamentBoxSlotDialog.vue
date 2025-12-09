@@ -10,7 +10,7 @@
         outlined
         dense
         hide-details
-        :placeholder="$t('app.general.label.search')"
+        :placeholder="$t('app.filament_box.label.search_placeholder')"
         append-icon="$magnify"
         class="mb-4"
         @focus="$event.target.select()"

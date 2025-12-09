@@ -30,6 +30,9 @@ export const actions = {
   async onFilamentBoxRead ({ commit }, payload: { key: string; value?: (number | null)[] }) {
     if (payload?.value && Array.isArray(payload.value)) {
       commit('setSlots', payload.value)
+    } else {
+      // No data found, but we're still loaded
+      commit('setLoaded', true)
     }
   },
 

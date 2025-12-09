@@ -5,7 +5,8 @@ export const defaultState = (): FilamentBoxState => {
     slots: [null, null, null, null],
     dialog: {
       show: false
-    }
+    },
+    loaded: false
   }
 }
 

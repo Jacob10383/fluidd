@@ -6,7 +6,18 @@
     layout-path="dashboard.filament-box-card"
   >
     <v-card-text>
-      <v-row>
+      <v-row v-if="!isLoaded">
+        <v-col class="text-center grey--text">
+          <v-progress-circular
+            indeterminate
+            size="20"
+            width="2"
+            class="mr-2"
+          />
+          {{ $t('app.filament_box.msg.loading') }}
+        </v-col>
+      </v-row>
+      <v-row v-else>
         <v-col
           v-for="(slot, index) in slots"
           :key="index"
@@ -80,6 +91,10 @@ import FilamentBoxSlotDialog from './FilamentBoxSlotDialog.vue'
 export default class FilamentBoxCard extends Mixins(StateMixin) {
   get slots (): (number | null)[] {
     return this.$typedGetters['filamentBox/getSlots']
+  }
+
+  get isLoaded (): boolean {
+    return this.$typedState.filamentBox.loaded
   }
 
   getSlotSpool (index: number): Spool | undefined {

@@ -52,6 +52,7 @@ jobs:
       - name: Read ChangeLog
         uses: mindsers/changelog-reader-action@v2.2.3
         id: changelog
+        continue-on-error: true
         with:
           validation_depth: 1
           version: ${{ steps.tag_name.outputs.current_version }}
@@ -65,8 +66,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
-          body: |
-            ${{ steps.changelog.outputs.changes }}
+          body: ${{ steps.changelog.outputs.changes || 'No release notes available.' }}
           draft: true
           prerelease: false
 

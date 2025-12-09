@@ -1095,6 +1095,9 @@ app:
     label:
       slot: Slot
       empty: Empty
+      search_placeholder: Search by name, material, or ID
+    msg:
+      loading: Loading slot data...
   mmu:
     btn:
       check_all_gates: Check All Gates
