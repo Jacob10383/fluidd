@@ -1,0 +1,26 @@
+name: Update Last Synced Badge
+
+on:
+  push:
+    branches:
+      - k2  
+  workflow_dispatch:  
+jobs:
+  update-badge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: k2
+          fetch-depth: 1
+      
+      - name: Get last commit date and update gist
+        run: |
+          COMMIT_DATE=$(git log -1 --format=%cd --date=format:"%b %d, %Y")
+          
+          curl -X PATCH \
+            -H "Authorization: token ${{ secrets.GIST_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/gists/${{ secrets.GIST_ID }} \
+            -d "{\"files\":{\"fluidd-last-update.json\":{\"content\":\"{\\\"date\\\":\\\"$COMMIT_DATE\\\"}\"}}}"
