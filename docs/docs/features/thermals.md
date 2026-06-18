@@ -14,9 +14,22 @@ fans in real time.
 
 - Click a heater, sensor, or fan name to toggle its visibility.
 - Click the power value to toggle power graph visibility.
+- Hover over a heater, sensor, or fan row to highlight its series in the chart.
 - Hold ++shift++ and scroll the mouse wheel over the chart to zoom.
 
 ![Thermal graph showing real-time temperature history for heaters and sensors](/assets/images/graph.png)
+
+## Sensor colors
+
+Each heater, fan, and sensor row displays a colored icon. Click it to open a
+color picker and set a custom color for that sensor. The color is reflected
+immediately in both the list and the chart.
+
+To revert to the automatically assigned palette color, open the picker and
+click **Reset to default**.
+
+Colors are saved per sensor in Moonraker's database and restored on the next
+page load.
 
 ## Presets
 

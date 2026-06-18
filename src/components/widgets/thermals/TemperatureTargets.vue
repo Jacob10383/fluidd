@@ -29,14 +29,20 @@
           v-for="item in heaters"
           :key="item.key"
           @contextmenu.prevent="handleHeaterRowClick(item, $event)"
+          @mouseenter="handleHeaterMouseEnter(item)"
+          @mouseleave="handleHeaterMouseLeave"
         >
-          <td>
-            <v-icon
+          <td @contextmenu.stop>
+            <app-color-picker
+              dot
+              resettable
               small
-              :color="item.color"
-            >
-              $fire
-            </v-icon>
+              icon="$fire"
+              :title="$t('app.setting.label.sensor_color')"
+              :value="item.color"
+              @input="setSensorColor(item.key, $event)"
+              @reset="resetSensorColor(item.key)"
+            />
           </td>
           <td class="temp-name">
             <span
@@ -105,15 +111,21 @@
         <tr
           v-for="item in fans"
           :key="item.key"
+          @mouseenter="handleHeaterMouseEnter(item)"
+          @mouseleave="handleHeaterMouseLeave"
         >
           <td>
-            <v-icon
+            <app-color-picker
+              dot
+              resettable
               small
-              :class="{ 'spin': item.speed > 0 && item.target > 0 }"
-              :color="item.color"
-            >
-              $fan
-            </v-icon>
+              icon="$fan"
+              :icon-class="{ 'spin': item.speed > 0 && item.target > 0 }"
+              :title="$t('app.setting.label.sensor_color')"
+              :value="item.color"
+              @input="setSensorColor(item.key, $event)"
+              @reset="resetSensorColor(item.key)"
+            />
           </td>
           <td class="temp-name">
             <span
@@ -189,14 +201,20 @@
         <tr
           v-for="item in sensors"
           :key="item.key"
+          @mouseenter="handleHeaterMouseEnter(item)"
+          @mouseleave="handleHeaterMouseLeave"
         >
           <td>
-            <v-icon
+            <app-color-picker
+              dot
+              resettable
               small
-              :color="item.color"
-            >
-              $thermometer
-            </v-icon>
+              icon="$thermometer"
+              :title="$t('app.setting.label.sensor_color')"
+              :value="item.color"
+              @input="setSensorColor(item.key, $event)"
+              @reset="resetSensorColor(item.key)"
+            />
           </td>
           <td class="temp-name">
             <span
@@ -408,6 +426,14 @@ export default class TemperatureTargets extends Mixins(StateMixin) {
     return this.$typedState.config.uiSettings.general.showGasResistance
   }
 
+  setSensorColor (key: string, color: string) {
+    this.$typedDispatch('config/updateSensorColor', { key, color })
+  }
+
+  resetSensorColor (key: string) {
+    this.$typedDispatch('config/removeSensorColor', { key })
+  }
+
   setHeaterTargetTemp (heater: string, target: number) {
     this.sendGcode(`SET_HEATER_TEMPERATURE HEATER=${encodeGcodeParamValue(heater)} TARGET=${target}`)
   }
@@ -459,6 +485,14 @@ export default class TemperatureTargets extends Mixins(StateMixin) {
     }
 
     this.$emit('updateChartSelectedLegends', chartSelectedLegends)
+  }
+
+  handleHeaterMouseEnter (item: Heater | Fan | Sensor) {
+    this.$emit('highlightChartSeries', item.key)
+  }
+
+  handleHeaterMouseLeave () {
+    this.$emit('downplayChartSeries')
   }
 
   getNevermoreSensors (item: Record<string, number | undefined>) {

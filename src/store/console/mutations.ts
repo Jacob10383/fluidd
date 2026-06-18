@@ -36,7 +36,7 @@ export const mutations = {
     while (state.console.length >= Globals.CONSOLE_HISTORY_RETENTION) {
       state.console.shift()
     }
-    state.console.push(entry)
+    state.console.push(Object.freeze(entry))
   },
 
   /**
@@ -45,6 +45,7 @@ export const mutations = {
   setAllEntries (state, payload: ConsoleEntry[]) {
     state.consoleEntryCount = payload.length
     state.console = payload
+      .map(entry => Object.freeze(entry))
   },
 
   setResetPromptDialog (state, payload: string) {
@@ -80,7 +81,7 @@ export const mutations = {
   /**
    * Inits the console history from db
    */
-  setInitConsole (state, payload: ConsoleState) {
+  setInitConsole (state, payload: Partial<ConsoleState>) {
     if (payload) {
       if (payload.consoleFilters) {
         payload.consoleFiltersRegexp = payload.consoleFilters
@@ -119,14 +120,18 @@ export const mutations = {
   /**
    * Maintains the current console command
    */
-  setConsoleCommand (state, payload) {
+  setConsoleCommand (state, payload: string) {
     state.consoleCommand = payload
+  },
+
+  setConsoleSearch (state, payload: string) {
+    state.consoleSearch = payload
   },
 
   /**
    * Sets auto scroll
    */
-  setAutoScroll (state, payload) {
+  setAutoScroll (state, payload: boolean) {
     state.autoScroll = payload
   },
 
@@ -158,6 +163,6 @@ export const mutations = {
   },
 
   setLastCleared (state) {
-    Vue.set(state, 'lastCleared', Date.now())
+    state.lastCleared = Date.now()
   }
 } satisfies MutationTree<ConsoleState>

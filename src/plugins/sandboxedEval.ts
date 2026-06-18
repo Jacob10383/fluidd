@@ -4,7 +4,15 @@ import SandboxedEvalWorker from '@/workers/sandboxedEval.worker?ts?worker'
 
 const workers: Record<string, Worker> = {}
 
-const sandboxedEval = async<T>(code: string, feature?: string, timeout = 800): Promise<T> => {
+export interface SandboxedEvalOptions {
+  feature?: string;
+  timeout?: number;
+  context?: unknown;
+}
+
+const sandboxedEval = async (code: string, options: SandboxedEvalOptions = {}): Promise<unknown> => {
+  const { feature, timeout = 800, context } = options
+
   const id = Date.now()
   const worker = getWorker(feature)
 
@@ -51,15 +59,14 @@ const sandboxedEval = async<T>(code: string, feature?: string, timeout = 800): P
 
   const message: SandboxedEvalWorkerRequestMessage = {
     code,
+    context,
     id
   }
 
   worker.postMessage(message)
 
   try {
-    const result = await workerPromise
-
-    return result as T
+    return await workerPromise
   } finally {
     if (feature && signal.aborted) {
       worker.terminate()

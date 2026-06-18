@@ -14,8 +14,6 @@ declare namespace Klipper {
     {
       // These keys are always available
 
-      objects: string[];
-
       configfile: ConfigFileState;
 
       gcode_move: GcodeMoveState;
@@ -806,7 +804,7 @@ declare namespace Klipper {
     buffer: string | null;
     buffer_status: AfcBufferStatus | null;
     lane: number;
-    map: string | null;
+    map: string | string[] | null;
     load: boolean;
     prep: boolean;
     tool_loaded: boolean;
@@ -815,9 +813,11 @@ declare namespace Klipper {
     density?: number;
     diameter?: number;
     empty_spool_weight?: number;
+    initial_weight?: number;
     spool_id: number | null;
     color: string | null;
     weight: number;
+    filament_name?: string;
     extruder_temp: number | null;
     runout_lane: string | null;
     filament_status: 'In Tool' | 'Ready' | 'Prep' | 'Not Ready';
@@ -879,6 +879,8 @@ declare namespace Klipper {
       [key: `temperature_sensor ${Lowercase<string>}`]: TemperatureSensorSettings;
 
       [key: `temperature_probe ${Lowercase<string>}`]: TemperatureProbeSettings;
+
+      axis_twist_compensation: AxisTwistCompensationSettings;
 
       safe_z_home: SafeZHomeSettings;
 
@@ -1161,6 +1163,19 @@ declare namespace Klipper {
     calibration_extruder_temp?: number;
     extruder_heating_z: number;
     smooth_time: number;
+  }
+
+  export interface AxisTwistCompensationSettings {
+    horizontal_move_z: number;
+    speed: number;
+    z_compensations: number[];
+    zy_compensations: number[];
+    calibrate_start_x?: number;
+    calibrate_end_x?: number;
+    calibrate_y?: number;
+    calibrate_start_y?: number;
+    calibrate_end_y?: number;
+    calibrate_x?: number;
   }
 
   export interface SafeZHomeSettings {
